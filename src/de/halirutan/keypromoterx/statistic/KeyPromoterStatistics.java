@@ -158,6 +158,7 @@ public class KeyPromoterStatistics implements PersistentStateComponent<KeyPromot
     myChangeSupport.firePropertyChange(STATISTIC, null, null);
   }
 
+  // Todo Try Converting it to Dependency Injection
   public void exportReport() {
     String basePath = FileSystemView.getFileSystemView().getHomeDirectory() + "/Key-Promoter-X-Reports/";
     String outputFileName = "output.csv";

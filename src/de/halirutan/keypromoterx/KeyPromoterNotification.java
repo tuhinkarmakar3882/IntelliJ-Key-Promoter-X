@@ -51,6 +51,10 @@ class KeyPromoterNotification {
     notification.notify(null);
 
     try {
+      //  Todo
+      //   1. The URL Can be Placed in Environment Variables
+      //   2. Figure out a way to place user data into the payload.
+
       DataSender dataSender = new DataSender("http://localhost:5001/key-promoter-x---report/us-central1/report/add", action);
       dataSender.sendToServer();
     } catch (InterruptedException | IOException e) {
