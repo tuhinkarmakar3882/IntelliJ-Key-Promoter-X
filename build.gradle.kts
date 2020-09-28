@@ -15,6 +15,7 @@ repositories {
 
 dependencies {
   compile("com.opencsv", "opencsv", "4.3")
+  compile("com.fasterxml.jackson.core", "jackson-databind", "2.11.2")
 }
 
 sourceSets {
