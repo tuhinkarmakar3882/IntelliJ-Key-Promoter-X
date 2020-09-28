@@ -19,6 +19,16 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog;
 import de.halirutan.keypromoterx.statistic.KeyPromoterStatistics;
 import org.jetbrains.annotations.NotNull;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.sql.Timestamp;
+import java.util.HashMap;
+import static java.net.http.HttpRequest.BodyPublishers.ofString;
 
 /**
  * A custom notification class that allows for creating 1. tips if a short cut was missed and 2. a balloon asking if
@@ -47,6 +57,39 @@ class KeyPromoterNotification {
                                            .addAction(new EditKeymapAction(action, action.getShortcut()))
                                            .addAction(new SuppressTipAction(action));
     notification.notify(null);
+
+    try {
+      String url = "http://localhost:5001/key-promoter-x---report/us-central1/report/add";
+      String payload = generatePayload(action);
+      sendToServer(url, payload);
+    } catch (InterruptedException | IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private static void sendToServer(String url, String payload) throws IOException, InterruptedException {
+    HttpClient client = HttpClient.newHttpClient();
+
+    HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(url))
+            .header("Content-Type", "application/json")
+            .POST(ofString(payload))
+            .build();
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    System.out.println(response.body());
+  }
+
+  private static String generatePayload(KeyPromoterAction action) throws JsonProcessingException {
+    HashMap<String, String> payload = new HashMap<>();
+
+    payload.put("user", "Alice Bob");
+    payload.put("actionMissed", action.getDescription());
+    payload.put("actionShortcut", action.getShortcut());
+    payload.put("eventTime", String.valueOf(new Timestamp(System.currentTimeMillis())));
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    return objectMapper.writeValueAsString(payload);
   }
 
   static void askToCreateShortcut(KeyPromoterAction action) {
