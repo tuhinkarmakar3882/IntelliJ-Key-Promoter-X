@@ -25,6 +25,7 @@ public class Exporter {
     writer.flush();
   }
 
+  // Todo Try using java.nio
   private void createFilesAndDirectories() throws IOException {
     new File(basePath).mkdirs();
     new File(basePath + outputFileName).createNewFile();
@@ -34,22 +35,8 @@ public class Exporter {
     ArrayList<String[]> normalizedData = new ArrayList<>();
     normalizedData.add(new String[]{"shortcut", "description", "count", "ideaActionID"});
     for (StatisticsItem statisticsItem : statisticsItems) {
-      normalizedData.add(new String[]{convertToUnicode(statisticsItem.shortCut), statisticsItem.description, String.valueOf(statisticsItem.count), statisticsItem.ideaActionID});
+      normalizedData.add(statisticsItem.getStatisticalData());
     }
     return normalizedData;
-  }
-
-  private String convertToUnicode(String originalString) {
-    StringBuilder unicodeString = new StringBuilder();
-    for (int characterPosition = 0; characterPosition < originalString.length(); characterPosition++) {
-      if (Character.isSurrogate(originalString.charAt(characterPosition))) {
-        Integer res = Character.codePointAt(originalString, characterPosition);
-        characterPosition++;
-        unicodeString.append("U+").append(Integer.toHexString(res).toUpperCase());
-      } else {
-        unicodeString.append(originalString.charAt(characterPosition));
-      }
-    }
-    return unicodeString.toString();
   }
 }

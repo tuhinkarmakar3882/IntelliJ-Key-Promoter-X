@@ -81,4 +81,23 @@ public class StatisticsItem implements Comparable<StatisticsItem>{
     public String getDescription() {
         return description;
     }
+
+    public String[] getStatisticalData() {
+        return new String[]{convertToUnicode(this.shortCut), this.description, String.valueOf(this.count), this.ideaActionID};
+    }
+
+    private String convertToUnicode(String originalString) {
+        StringBuilder unicodeString = new StringBuilder();
+        for (int characterPosition = 0; characterPosition < originalString.length(); characterPosition++) {
+            if (Character.isSurrogate(originalString.charAt(characterPosition))) {
+                Integer res = Character.codePointAt(originalString, characterPosition);
+                characterPosition++;
+                unicodeString.append("U+").append(Integer.toHexString(res).toUpperCase());
+            } else {
+                unicodeString.append(originalString.charAt(characterPosition));
+            }
+        }
+        return unicodeString.toString();
+    }
+
 }
