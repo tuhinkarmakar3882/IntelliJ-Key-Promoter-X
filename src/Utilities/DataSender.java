@@ -38,7 +38,7 @@ public class DataSender {
   private String generatePayload(KeyPromoterAction action) throws JsonProcessingException {
     HashMap<String, String> payload = new HashMap<>();
 
-    payload.put("user", "Alice Bob");
+    payload.put("user", System.getenv("username"));
     payload.put("actionMissed", action.getDescription());
     payload.put("actionShortcut", action.getShortcut());
     payload.put("eventTime", String.valueOf(new Timestamp(System.currentTimeMillis())));

@@ -12,6 +12,7 @@
 
 package de.halirutan.keypromoterx;
 
+import Utilities.DataSender;
 import com.intellij.notification.*;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
@@ -19,8 +20,8 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog;
 import de.halirutan.keypromoterx.statistic.KeyPromoterStatistics;
 import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
-import Utilities.DataSender;
 
 /**
  * A custom notification class that allows for creating 1. tips if a short cut was missed and 2. a balloon asking if
@@ -51,11 +52,7 @@ class KeyPromoterNotification {
     notification.notify(null);
 
     try {
-      //  Todo
-      //   1. The URL Can be Placed in Environment Variables
-      //   2. Figure out a way to place user data into the payload.
-
-      DataSender dataSender = new DataSender("http://localhost:5001/key-promoter-x---report/us-central1/report/add", action);
+      DataSender dataSender = new DataSender(System.getenv("cloudFunction"), action);
       dataSender.sendToServer();
     } catch (InterruptedException | IOException e) {
       e.printStackTrace();  //  Todo Do Something if sending Fails

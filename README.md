@@ -1,3 +1,11 @@
+# Configurations
+Please set the following variables for this plugin to work
+```
+username = <your name>
+cloudFunction = <the url>
+```
+
+
 ![Downloads Badge](https://img.shields.io/jetbrains/plugin/d/9792-key-promoter-x.svg)
 [![Build Status](https://travis-ci.org/halirutan/IntelliJ-Key-Promoter.svg?branch=KeyPromoterX)](https://travis-ci.org/halirutan/IntelliJ-Key-Promoter)
 ![Plugin compatibility](https://github.com/halirutan/IntelliJ-Key-Promoter-X/workflows/Plugin%20compatibility/badge.svg)
