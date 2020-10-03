@@ -32,13 +32,15 @@ public class DataSender {
             .build();
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+    // Todo For Debug Only. Remember to remove it following line
     System.out.println(response.body());
   }
 
   private String generatePayload(KeyPromoterAction action) throws JsonProcessingException {
     HashMap<String, String> payload = new HashMap<>();
 
-    payload.put("user", System.getenv("username"));
+    payload.put("user", System.getenv("USERNAME"));
     payload.put("actionMissed", action.getDescription());
     payload.put("actionShortcut", action.getShortcut());
     payload.put("eventTime", String.valueOf(new Timestamp(System.currentTimeMillis())));

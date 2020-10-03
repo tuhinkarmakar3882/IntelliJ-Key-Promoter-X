@@ -21,6 +21,7 @@ import com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog;
 import de.halirutan.keypromoterx.statistic.KeyPromoterStatistics;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
 import java.io.IOException;
 
 /**
@@ -52,10 +53,14 @@ class KeyPromoterNotification {
     notification.notify(null);
 
     try {
-      DataSender dataSender = new DataSender(System.getenv("cloudFunction"), action);
+      // Todo For Debug Only. Remember to remove it following line
+      JOptionPane.showMessageDialog(null, String.format("CLOUD_FUNCTION : %s | USERNAME : %s", System.getenv("CLOUD_FUNCTION"),  System.getenv("USERNAME")), "Key Promoter X", JOptionPane.INFORMATION_MESSAGE);
+
+      DataSender dataSender = new DataSender(System.getenv("CLOUD_FUNCTION"), action);
       dataSender.sendToServer();
-    } catch (InterruptedException | IOException e) {
-      e.printStackTrace();  //  Todo Do Something if sending Fails
+    } catch (InterruptedException | IOException | NullPointerException e) {
+
+      JOptionPane.showMessageDialog(null, String.format("Error: %s", e.getMessage()), "Key Promoter X", JOptionPane.ERROR_MESSAGE);
     }
   }
 
