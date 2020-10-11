@@ -28,7 +28,7 @@ sourceSets {
 configure<org.jetbrains.intellij.IntelliJPluginExtension> {
   version = "LATEST-EAP-SNAPSHOT"
   updateSinceUntilBuild = true
-  pluginName = "Key-Promoter-X"
+  pluginName = "T-Key-Promoter-X-Mod"
 //  alternativeIdePath = "/home/patrick/build/share/JetBrains/Toolbox/apps/Rider/ch-0/201.7846.1"
 //  alternativeIdePath = "/home/patrick/.local/share/JetBrains/Toolbox/apps/AndroidStudio/ch-0/183.5452501"
 //  alternativeIdePath = "/home/patrick/.local/share/JetBrains/Toolbox/apps/PyCharm-P/ch-0/191.6605.12"

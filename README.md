@@ -1,9 +1,33 @@
-# Configurations
-Please set the following variables for this plugin to work
+# T-Key-Promoter-X-Mod
+## Configurations
+
+#### How to Use?
+
 ```
-username = <your name>
-cloudFunction = <the url>
+Step 1: Install the T-Key-Promoter-X Plugin
 ```
+
+Step 2: Create the directory ".t-key-promoter-x"
+```shell script
+cd ~
+mkdir .t-key-promoter-x/
+```
+
+Step 3: Create and Open config.properties
+```shell script
+touch config.properties
+nano config.properties
+```
+
+Step 4: Add the following to that file (Update the placeholders Accordingly)
+```properties
+CLOUD_FUNCTION = YOUR_CLOUD_FUNCTION_URL
+USERNAME = YOUR_NAME
+PASSWORD = YOUR_PASSWORD
+```
+
+Step 5: Save and Exit. ----- Done.
+
 
 
 ![Downloads Badge](https://img.shields.io/jetbrains/plugin/d/9792-key-promoter-x.svg)
