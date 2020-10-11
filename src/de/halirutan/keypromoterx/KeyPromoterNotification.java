@@ -13,6 +13,7 @@
 package de.halirutan.keypromoterx;
 
 import Utilities.DataSender;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.intellij.notification.*;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
@@ -20,9 +21,6 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog;
 import de.halirutan.keypromoterx.statistic.KeyPromoterStatistics;
 import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
-import java.io.IOException;
 
 /**
  * A custom notification class that allows for creating 1. tips if a short cut was missed and 2. a balloon asking if
@@ -55,9 +53,9 @@ class KeyPromoterNotification {
     try {
       DataSender dataSender = new DataSender(action);
       dataSender.sendToServer();
-    } catch (InterruptedException | IOException | NullPointerException e) {
-      // TODO LOG THIS THINGS INTO .keyPromoter
-      JOptionPane.showMessageDialog(null, String.format("Error: %s", e.getMessage()), "Key Promoter X", JOptionPane.ERROR_MESSAGE);
+    } catch (JsonProcessingException e) {
+      //  TODO - Add a logging feature to log this errors
+      e.printStackTrace();
     }
   }
 

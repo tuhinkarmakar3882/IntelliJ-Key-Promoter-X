@@ -5,16 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.halirutan.keypromoterx.KeyPromoterAction;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.concurrent.CompletableFuture;
 
 import static java.net.http.HttpRequest.BodyPublishers.ofString;
 
@@ -45,7 +42,7 @@ public class DataSender {
     return null;
   }
 
-  public void sendToServer() throws IOException, InterruptedException {
+  public void sendToServer() {
     HttpClient client = HttpClient.newHttpClient();
 
     HttpRequest request = HttpRequest.newBuilder()
@@ -56,9 +53,12 @@ public class DataSender {
 
     client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
             .thenApply(HttpResponse::body)
-            .thenAccept(System.out::println);
-
-//    System.out.println(response.body());
+            .thenAccept(System.out::println)
+            .exceptionally(e -> {
+              //  Todo Think about what to do when it fails
+              System.out.println(e.getMessage());
+              return null;
+            });
   }
 
   private String generatePayload(KeyPromoterAction action) throws JsonProcessingException {
