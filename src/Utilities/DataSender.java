@@ -20,11 +20,13 @@ import static java.net.http.HttpRequest.BodyPublishers.ofString;
 public class DataSender {
   private final String url;
   private final String username;
+  private final String password;
   private final String payload;
 
   public DataSender(KeyPromoterAction action) throws JsonProcessingException {
     this.url = readFromConfigFile("CLOUD_FUNCTION");
     this.username = readFromConfigFile("USERNAME");
+    this.password = readFromConfigFile("PASSWORD");
     this.payload = generatePayload(action);
   }
 
@@ -61,6 +63,7 @@ public class DataSender {
     HashMap<String, String> payload = new HashMap<>();
 
     payload.put("username", username);
+    payload.put("password", password);
     payload.put("actionMissed", action.getDescription());
     payload.put("actionShortcut", action.getShortcut());
     payload.put("timestamp", String.valueOf(new Timestamp(System.currentTimeMillis())));
