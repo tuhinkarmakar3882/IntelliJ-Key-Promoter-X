@@ -14,6 +14,7 @@ import java.net.http.HttpResponse;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 
 import static java.net.http.HttpRequest.BodyPublishers.ofString;
 
@@ -53,10 +54,11 @@ public class DataSender {
             .POST(ofString(payload))
             .build();
 
-    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+            .thenApply(HttpResponse::body)
+            .thenAccept(System.out::println);
 
-    // Todo For Debug Only. Remember to remove it following line
-    System.out.println(response.body());
+//    System.out.println(response.body());
   }
 
   private String generatePayload(KeyPromoterAction action) throws JsonProcessingException {
@@ -66,7 +68,7 @@ public class DataSender {
     payload.put("password", password);
     payload.put("actionMissed", action.getDescription());
     payload.put("actionShortcut", action.getShortcut());
-    payload.put("timestamp", String.valueOf(new Timestamp(System.currentTimeMillis())));
+    payload.put("timestamp", String.valueOf(System.currentTimeMillis()));
 
     ObjectMapper objectMapper = new ObjectMapper();
     return objectMapper.writeValueAsString(payload);
