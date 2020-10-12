@@ -31,7 +31,7 @@ public class DataSender {
   private String readFromConfigFile(String key) {
     Properties prop = new Properties();
 
-    String filePath = System.getProperty("user.home") + "/.t-key-promoter-x/config.properties";
+    String filePath = System.getProperty("user.home") + "/.neev/config.properties";
 
     try (FileInputStream ip = new FileInputStream(filePath)) {
       prop.load(ip);

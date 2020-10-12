@@ -1,16 +1,16 @@
-# T-Key-Promoter-X-Mod
+# Neev
 ## Configurations
 
 #### How to Use?
 
 ```
-Step 1: Install the T-Key-Promoter-X Plugin
+Step 1: Install the Neev Plugin
 ```
 
 Step 2: Create the directory ".t-key-promoter-x"
 ```shell script
 cd ~
-mkdir .t-key-promoter-x/
+mkdir .neev/
 ```
 
 Step 3: Create and Open config.properties
